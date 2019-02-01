@@ -14,6 +14,7 @@ export default class Apple extends React.Component {
     }
     this.updatePrice = this.updatePrice.bind(this);
     this.getData= this.getData.bind(this);
+    this.checkSpot = this.checkSpot.bind(this);
 
   }
 
@@ -36,6 +37,25 @@ export default class Apple extends React.Component {
     })
   }
 
+  checkSpot() {
+    const index = 1;
+    if (this.props.playerOnePosition === index) {
+      this.setState({
+        playersOnSpot: this.props.playerOne
+      })
+    }
+    else {
+      this.setState({
+        playersOnSpot: []
+      })
+    }
+  }
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.playerOnePosition !== this.props.playerOnePosition) {
+      this.checkSpot();
+    }
+  }
+
   componentDidMount() {
     axios.get('https://api.iextrading.com/1.0/stock/aapl/chart/3m')
     .then(data => {
@@ -46,10 +66,10 @@ export default class Apple extends React.Component {
 
   render() {
   return (
-    <div className="stockSpot" value={this.state.name}>
+    <span className="stockSpot" value={this.state.name}>
       Google Node
       <button type="button" onClick={this.updatePrice}> test </button>
-    </div>
+    </span>
   )
   }
 }
