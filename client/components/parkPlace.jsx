@@ -37,7 +37,7 @@ export default class ParkPlace extends React.Component {
   }
 
   buyApartment() {
-    let capital = this.props.p1.playerOneCapital;
+    let capital = Number(this.props.p1.playerOneCapital);
     if (this.state.owner === 'na') {
       if (capital >= this.state.buyPrice) {
           capital = (capital - this.state.buyPrice).toFixed(2);

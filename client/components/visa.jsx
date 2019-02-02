@@ -42,7 +42,7 @@ export default class Visa extends React.Component {
 
   buyStock() {
     var priceOfStock = this.state.stockPrice;
-    var playerCapital = this.props.p1.playerOneCapital;
+    var playerCapital = Number(this.props.p1.playerOneCapital);
     var numberOfStocks = this.props.p1.playerOneVisaCount;
     if (playerCapital > priceOfStock) {
       playerCapital = (playerCapital - priceOfStock).toFixed(2);

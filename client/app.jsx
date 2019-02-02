@@ -6,6 +6,7 @@ import Start from './components/start.jsx';
 import ParkPlace from './components/parkPlace.jsx';
 import PlayerOne from './components/playerOne.jsx';
 import Visa from './components/visa.jsx';
+import LeadersUI from './components/leadersUI.jsx';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -22,7 +23,6 @@ export default class App extends React.Component {
     }
     this.movePlayer = this.movePlayer.bind(this);
     this.updatePlayer = this.updatePlayer.bind(this);
-    this.getLeaders = this.getLeaders.bind(this);
     this.updateLeaders = this.updateLeaders.bind(this);
 
   }
@@ -33,29 +33,34 @@ export default class App extends React.Component {
     if (newSpot > 3) {
       newSpot = 0;
     }
-
-
     this.setState({
       playerOnePosition: newSpot,
       turn: updateTurn
     });
   }
+
   updatePlayer(stockName = null , stock = null, capital) {
     if (stockName === null) {
       this.setState({
         playerOneCapital : capital
+      }, () => {
+        this.updateLeaders();
       })
     }
     else if (stockName === 'Apple') {
       this.setState({
         playerOneAppleCount: stock,
         playerOneCapital: capital
+      }, () => {
+        this.updateLeaders();
       })
     }
     else if (stockName === 'Visa') {
       this.setState({
         playerOneVisaCount: stock,
         playerOneCapital: capital
+      }, () => {
+        this.updateLeaders();
       })
     }
   }
@@ -64,17 +69,8 @@ export default class App extends React.Component {
     axios.post('/leaders', {
       name: this.state.playerOne,
       capital: this.state.playerOneCapital
-    })
-  }
-
-  getLeaders() {
-    console.log('getting leaders');
-    axios.get('/leaders')
-    .then(data => {
-      console.log('getleaders', data);
-      this.setState({
-        leaderboard: data.data
-      })
+    }).then(data => {
+      this.setState({leaderboard: data.data});
     })
   }
 
@@ -85,7 +81,6 @@ export default class App extends React.Component {
       playerOne: name
     }, () => {
       this.updateLeaders();
-      this.getLeaders();
     });
   }
 
@@ -95,7 +90,7 @@ export default class App extends React.Component {
           <div id="board">
           <Start index={0} playerOnePosition={this.state.playerOnePosition} playerOne={this.state.playerOne} p1={this.state} updatePlayer={this.updatePlayer} />
           <Apple index={1} playerOnePosition={this.state.playerOnePosition} playerOne={this.state.playerOne} p1={this.state} updatePlayer={this.updatePlayer} turn={this.state.turn} />
-          <ParkPlace index={2} playerOnePosition={this.state.playerOnePosition} playerOne={this.state.playerOne} p1={this.state} updatePlayer={this.updatePlayer}/>
+          <ParkPlace index={2} playerOnePosition={this.state.playerOnePosition} playerOne={this.state.playerOne} p1={this.state} updatePlayer={this.updatePlayer} />
           <Visa index={3} playerOnePosition={this.state.playerOnePosition} playerOne={this.state.playerOne} p1={this.state} updatePlayer={this.updatePlayer} turn={this.state.turn} />
 
         </div>
@@ -104,7 +99,9 @@ export default class App extends React.Component {
         <button type="button" onClick={this.movePlayer}>MOVE PLAYER ONE</button>
         </div>
         <footer>
-          <PlayerOne playerOneDetails={this.state}/>
+          <PlayerOne playerOneDetails={this.state}/> <br></br>
+          <p> LEADERS </p>
+          <LeadersUI leaders={this.state.leaderboard} />
         </footer>
       </div>
     )

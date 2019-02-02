@@ -11,18 +11,18 @@ app.use(parser.json())
 
 app.post('/leaders', function(req,res) {
   save(req.body)
-  // .then(() => {
-  //   retrieve()
-  //   .then(data => {
-  //     console.log('leaderboard: ', data);
-  //   })
-  // })
+  .then(() => {
+    retrieve()
+    .then(data => {
+      //console.log('leaderboard: ', data);
+      res.send(data);
+    })
+  })
 });
 
 app.get('/leaders', function(req,res) {
   retrieve()
   .then(data => {
-    console.log('data', data);
       res.send(data);
   })
 });
