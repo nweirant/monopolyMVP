@@ -33,7 +33,7 @@ export default class App extends React.Component {
       turn: updateTurn
     });
   }
-  updatePlayer(stock = null, capital = null) {
+  updatePlayer(stock = null, capital) {
     if (stock === null) {
       this.setState({
         playerOneCapital : capital

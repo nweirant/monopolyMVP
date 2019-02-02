@@ -16,6 +16,8 @@ export default class Apple extends React.Component {
     this.getData= this.getData.bind(this);
     this.checkSpot = this.checkSpot.bind(this);
     this.buyStock = this.buyStock.bind(this);
+    this.sellStock = this.sellStock.bind(this);
+
 
   }
 
@@ -50,6 +52,21 @@ export default class Apple extends React.Component {
     else {
       console.log('not enough funds');
       return;
+    }
+  }
+
+  sellStock() {
+    var priceOfStock = this.state.stockPrice;
+    var playerCapital = Number(this.props.p1.playerOneCapital);
+    var numberOfStocks = this.props.p1.playerOneAppleCount;
+    if (numberOfStocks > 0) {
+      console.log(typeof numberOfStocks);
+      playerCapital = (playerCapital + priceOfStock).toFixed(2);
+      numberOfStocks -= 1;
+      this.props.updatePlayer(numberOfStocks, playerCapital);
+    }
+    else {
+      console.log('You do not own any stocks in Apple');
     }
 
   }
@@ -89,7 +106,12 @@ export default class Apple extends React.Component {
       <span className={occupied} value={this.state.name}>
         Apple, Stock Price:{(this.state.stockPrice).toFixed(2)}
         <div>
-        {!occupied ? null : <button type="button" onClick={this.buyStock}> BUY </button> }
+        {!occupied ? null :
+          <div>
+          <button type="button" onClick={this.buyStock}> BUY </button>
+          <button type="button" onClick={this.sellStock}> SELL </button>
+          </div>
+        }
         </div>
       </span>
     )
