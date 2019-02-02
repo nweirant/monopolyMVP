@@ -4,6 +4,7 @@ import Apple from './components/apple.jsx';
 import Start from './components/start.jsx';
 import ParkPlace from './components/parkPlace.jsx';
 import PlayerOne from './components/playerOne.jsx';
+import Visa from './components/visa.jsx';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -12,7 +13,8 @@ export default class App extends React.Component {
       playerOnePosition: 0,
       playerOne: 'TJ',
       playerOneAppleCount: 0,
-      playerOneCapital: 1000,
+      playerOneVisaCount: 0,
+      playerOneCapital: 1020,
       playerOneNetWorth: 0,
       turn: 0
     }
@@ -23,7 +25,7 @@ export default class App extends React.Component {
   movePlayer() {
     let updateTurn = this.state.turn+= 1;
     let newSpot = this.state.playerOnePosition += 1;
-    if (newSpot > 2) {
+    if (newSpot > 3) {
       newSpot = 0;
     }
 
@@ -33,15 +35,21 @@ export default class App extends React.Component {
       turn: updateTurn
     });
   }
-  updatePlayer(stock = null, capital) {
-    if (stock === null) {
+  updatePlayer(stockName = null , stock = null, capital) {
+    if (stockName === null) {
       this.setState({
         playerOneCapital : capital
       })
     }
-    else {
+    else if (stockName === 'Apple') {
       this.setState({
         playerOneAppleCount: stock,
+        playerOneCapital: capital
+      })
+    }
+    else if (stockName === 'Visa') {
+      this.setState({
+        playerOneVisaCount: stock,
         playerOneCapital: capital
       })
     }
@@ -52,9 +60,11 @@ export default class App extends React.Component {
     return (
       <div>
           <div id="board">
-          <Start index={0} playerOnePosition={this.state.playerOnePosition} playerOne={this.state.playerOne} />
+          <Start index={0} playerOnePosition={this.state.playerOnePosition} playerOne={this.state.playerOne} p1={this.state} updatePlayer={this.updatePlayer} />
           <Apple index={1} playerOnePosition={this.state.playerOnePosition} playerOne={this.state.playerOne} p1={this.state} updatePlayer={this.updatePlayer} turn={this.state.turn} />
           <ParkPlace index={2} playerOnePosition={this.state.playerOnePosition} playerOne={this.state.playerOne} p1={this.state} updatePlayer={this.updatePlayer}/>
+          <Visa index={3} playerOnePosition={this.state.playerOnePosition} playerOne={this.state.playerOne} p1={this.state} updatePlayer={this.updatePlayer} turn={this.state.turn} />
+
         </div>
 
         <div id="ui">

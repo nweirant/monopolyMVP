@@ -2,11 +2,11 @@ import React from 'react';
 import axios from 'axios';
 //https://api.iextrading.com/1.0/stock/aapl/quote
 //https://api.iextrading.com/1.0/stock/aapl/chart/3m
-export default class Apple extends React.Component {
+export default class Visa extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      name: 'Apple Inc.',
+      name: 'Visa Inc.',
       stockPrice: 0,
       playersOnSpot: [],
       prices: [],
@@ -43,11 +43,11 @@ export default class Apple extends React.Component {
   buyStock() {
     var priceOfStock = this.state.stockPrice;
     var playerCapital = this.props.p1.playerOneCapital;
-    var numberOfStocks = this.props.p1.playerOneAppleCount;
+    var numberOfStocks = this.props.p1.playerOneVisaCount;
     if (playerCapital > priceOfStock) {
       playerCapital = (playerCapital - priceOfStock).toFixed(2);
       numberOfStocks += 1;
-      this.props.updatePlayer('Apple', numberOfStocks, playerCapital);
+      this.props.updatePlayer('Visa', numberOfStocks, playerCapital);
     }
     else {
       console.log('not enough funds');
@@ -58,15 +58,15 @@ export default class Apple extends React.Component {
   sellStock() {
     var priceOfStock = this.state.stockPrice;
     var playerCapital = Number(this.props.p1.playerOneCapital);
-    var numberOfStocks = this.props.p1.playerOneAppleCount;
+    var numberOfStocks = this.props.p1.playerOneVisaCount;
     if (numberOfStocks > 0) {
       console.log(typeof numberOfStocks);
       playerCapital = (playerCapital + priceOfStock).toFixed(2);
       numberOfStocks -= 1;
-      this.props.updatePlayer('Apple', numberOfStocks, playerCapital);
+      this.props.updatePlayer('Visa', numberOfStocks, playerCapital);
     }
     else {
-      console.log('You do not own any stocks in Apple');
+      console.log('You do not own any stocks in Visa');
     }
 
   }
@@ -93,7 +93,7 @@ export default class Apple extends React.Component {
   }
 
   componentDidMount() {
-    axios.get('https://api.iextrading.com/1.0/stock/aapl/chart/3m')
+    axios.get('https://api.iextrading.com/1.0/stock/v/chart/3m')
     .then(data => {
       this.getData(data);
     })
@@ -104,7 +104,7 @@ export default class Apple extends React.Component {
     let occupied = this.state.playersOnSpot.length ? 'occupiedTile' : '';
     return (
       <span className={occupied} value={this.state.name}>
-        Apple, Stock Price:{(this.state.stockPrice).toFixed(2)}
+        Visa, Stock Price:{(this.state.stockPrice).toFixed(2)}
         <div>
         {!occupied ? null :
           <div>

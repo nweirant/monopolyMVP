@@ -7,16 +7,26 @@ export default class ParkPlace extends React.Component {
       playersOnSpot: [],
       buyPrice: 200,
       owner: 'na',
-      hitPrice: 0
+      hitPrice: 50,
+      rent: 10
     }
     this.checkSpot = this.checkSpot.bind(this);
     this.buyApartment = this.buyApartment.bind(this);
+    this.sellApartment = this.sellApartment.bind(this);
+
   }
 
   checkSpot() {
     if (this.props.playerOnePosition === this.props.index) {
       this.setState({
         playersOnSpot: this.props.playerOne
+      },
+      () => {
+        if (this.state.playersOnSpot !== this.state.owner) {
+          let capital = Number(this.props.p1.playerOneCapital);
+          capital = (capital - this.state.hitPrice).toFixed(2);
+          this.props.updatePlayer(null, null, capital);
+        }
       })
     }
     else {
@@ -33,11 +43,23 @@ export default class ParkPlace extends React.Component {
           capital = (capital - this.state.buyPrice).toFixed(2);
           this.setState({
             owner: this.state.playersOnSpot,
-            hitPrice: this.state.buyPrice
           }, () => {
-            this.props.updatePlayer(null,capital);
+            this.props.updatePlayer(null,null,capital);
           })
       }
+    }
+  }
+
+  sellApartment() {
+    let capital = Number(this.props.p1.playerOneCapital);
+    if (this.state.owner === this.props.p1.playerOne) {
+          capital = (capital + (this.state.buyPrice * 0.5)).toFixed(2);
+          this.setState({
+            owner: 'na',
+          }, () => {
+            this.props.updatePlayer(null,null,capital);
+          })
+
     }
   }
 
@@ -54,7 +76,13 @@ export default class ParkPlace extends React.Component {
       <span className={occupied}>
         Park Place ${this.state.buyPrice}
         <div>
-        {!occupied ? null : <button type="button" onClick={this.buyApartment}> BUY </button> }
+        {!occupied ? null :
+          <div>
+          <button type="button" onClick={this.buyApartment}> BUY </button>
+          <button type="button" onClick={this.sellApartment}> SELL </button>
+
+          </div>
+        }
         </div>
       </span>
     )

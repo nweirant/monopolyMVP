@@ -14,7 +14,9 @@ export default class PlayerOne extends React.Component {
     return (
       <div id="playerOneDetails">
         <span> Capital: {this.props.playerOneDetails.playerOneCapital} </span> <br/>
-        <span> Apple Stock: {this.props.playerOneDetails.playerOneAppleCount} </span>
+        <span> Apple Shares: {this.props.playerOneDetails.playerOneAppleCount} </span> <br/>
+        <span> Visa Shares: {this.props.playerOneDetails.playerOneVisaCount} </span>
+
       </div>
     )
   }

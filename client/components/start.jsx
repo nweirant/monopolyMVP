@@ -4,7 +4,8 @@ export default class Start extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      playersOnSpot: []
+      playersOnSpot: [],
+      fee: 20
     }
     this.checkSpot = this.checkSpot.bind(this);
   }
@@ -13,6 +14,10 @@ export default class Start extends React.Component {
     if (this.props.playerOnePosition === this.props.index) {
       this.setState({
         playersOnSpot: this.props.playerOne
+      }, () => {
+        let capital = Number(this.props.p1.playerOneCapital);
+        capital = (capital - this.state.fee).toFixed(2);
+        this.props.updatePlayer(null,null,capital);
       })
     }
     else {
