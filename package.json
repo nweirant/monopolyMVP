@@ -6,7 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "nodemon server/server.js",
-    "build": "webpack -w -d"
+    "build": "webpack -w -d",
+    "start" : "webpack -d && node server/server.js",
+    "redirect": "sudo iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 80 -j REDIRECT --to-port 3000"
+
   },
   "author": "",
   "license": "ISC",
