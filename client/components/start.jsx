@@ -30,6 +30,9 @@ export default class Start extends React.Component {
   componentDidMount() {
     this.checkSpot();
   }
+
+  
+
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.playerOnePosition !== this.props.playerOnePosition) {
       this.checkSpot();

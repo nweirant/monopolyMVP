@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDom from 'react-dom';
+import axios from 'axios';
 import Apple from './components/apple.jsx';
 import Start from './components/start.jsx';
 import ParkPlace from './components/parkPlace.jsx';
@@ -16,10 +17,14 @@ export default class App extends React.Component {
       playerOneVisaCount: 0,
       playerOneCapital: 1020,
       playerOneNetWorth: 0,
-      turn: 0
+      turn: 0,
+      leaderboard: []
     }
     this.movePlayer = this.movePlayer.bind(this);
     this.updatePlayer = this.updatePlayer.bind(this);
+    this.getLeaders = this.getLeaders.bind(this);
+    this.updateLeaders = this.updateLeaders.bind(this);
+
   }
 
   movePlayer() {
@@ -53,7 +58,35 @@ export default class App extends React.Component {
         playerOneCapital: capital
       })
     }
+  }
 
+  updateLeaders() {
+    axios.post('/leaders', {
+      name: this.state.playerOne,
+      capital: this.state.playerOneCapital
+    })
+  }
+
+  getLeaders() {
+    console.log('getting leaders');
+    axios.get('/leaders')
+    .then(data => {
+      console.log('getleaders', data);
+      this.setState({
+        leaderboard: data.data
+      })
+    })
+  }
+
+
+  componentDidMount() {
+    let name = prompt('Enter Name');
+    this.setState({
+      playerOne: name
+    }, () => {
+      this.updateLeaders();
+      this.getLeaders();
+    });
   }
 
   render() {
