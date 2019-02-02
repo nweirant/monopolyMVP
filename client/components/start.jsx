@@ -10,8 +10,7 @@ export default class Start extends React.Component {
   }
 
   checkSpot() {
-    const index = 0;
-    if (this.props.playerOnePosition === index) {
+    if (this.props.playerOnePosition === this.props.index) {
       this.setState({
         playersOnSpot: this.props.playerOne
       })
@@ -33,8 +32,9 @@ export default class Start extends React.Component {
   }
 
   render() {
+    let occupied = this.state.playersOnSpot.length ? 'occupiedTile' : '';
     return(
-      <span id="start">
+      <span id="start" className={occupied}>
           Start
       </span>
     )

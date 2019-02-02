@@ -15,6 +15,7 @@ export default class Apple extends React.Component {
     this.updatePrice = this.updatePrice.bind(this);
     this.getData= this.getData.bind(this);
     this.checkSpot = this.checkSpot.bind(this);
+    this.buyStock = this.buyStock.bind(this);
 
   }
 
@@ -37,9 +38,24 @@ export default class Apple extends React.Component {
     })
   }
 
+  buyStock() {
+    var priceOfStock = this.state.stockPrice;
+    var playerCapital = this.props.p1.playerOneCapital;
+    var numberOfStocks = this.props.p1.playerOneAppleCount;
+    if (playerCapital > priceOfStock) {
+      playerCapital = (playerCapital - priceOfStock).toFixed(2);
+      numberOfStocks += 1;
+      this.props.updatePlayer(numberOfStocks, playerCapital);
+    }
+    else {
+      console.log('not enough funds');
+      return;
+    }
+
+  }
+
   checkSpot() {
-    const index = 1;
-    if (this.props.playerOnePosition === index) {
+    if (this.props.playerOnePosition === this.props.index) {
       this.setState({
         playersOnSpot: this.props.playerOne
       })
@@ -54,6 +70,9 @@ export default class Apple extends React.Component {
     if (prevProps.playerOnePosition !== this.props.playerOnePosition) {
       this.checkSpot();
     }
+    if (prevProps.turn !== this.props.turn) {
+      this.updatePrice();
+    }
   }
 
   componentDidMount() {
@@ -65,13 +84,14 @@ export default class Apple extends React.Component {
   }
 
   render() {
-  return (
-    <span className="stockSpot" value={this.state.name}>
-      Google Node
-      <button type="button" onClick={this.updatePrice}> test </button>
-    </span>
-  )
+    let occupied = this.state.playersOnSpot.length ? 'occupiedTile' : '';
+    return (
+      <span className={occupied} value={this.state.name}>
+        Apple, Stock Price:{(this.state.stockPrice).toFixed(2)}
+        <div>
+        {!occupied ? null : <button type="button" onClick={this.buyStock}> BUY </button> }
+        </div>
+      </span>
+    )
   }
 }
-
-// export default Google;
