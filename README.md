@@ -1,4 +1,4 @@
-##An iteration of a monopoly game made in a 48 hour hackathon with a twist.
+## An iteration of a monopoly game made in a 48 hour hackathon with a twist.
 
 Rules:
      - Passing start cost $20.
