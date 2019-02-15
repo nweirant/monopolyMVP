@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-const mongo = process.env.MONGO_URI || 'localhost'
+const mongo = process.env.MONGO_URI || 'mongodb://localhost/monopoly'
 mongoose.connect(mongo, (err) => {
   if (err){
     console.log(err)

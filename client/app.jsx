@@ -88,11 +88,11 @@ export default class App extends React.Component {
     return (
       <div>
           <div id="board">
+
           <Start index={0} playerOnePosition={this.state.playerOnePosition} playerOne={this.state.playerOne} p1={this.state} updatePlayer={this.updatePlayer} />
           <Apple index={1} playerOnePosition={this.state.playerOnePosition} playerOne={this.state.playerOne} p1={this.state} updatePlayer={this.updatePlayer} turn={this.state.turn} />
           <ParkPlace index={2} playerOnePosition={this.state.playerOnePosition} playerOne={this.state.playerOne} p1={this.state} updatePlayer={this.updatePlayer} />
           <Visa index={3} playerOnePosition={this.state.playerOnePosition} playerOne={this.state.playerOne} p1={this.state} updatePlayer={this.updatePlayer} turn={this.state.turn} />
-
         </div>
 
         <div id="ui">
