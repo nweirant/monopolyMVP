@@ -3,5 +3,5 @@
 Rules:
      - Passing start cost $20.
      - Can only buy/sell stock when on a company's spot.
-     - Cost $50 when passing an apartment, pass the face value to avoid the charge.
+     - Cost $50 when passing an apartment, pay the face value to avoid the charge.
      
